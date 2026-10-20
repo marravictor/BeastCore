@@ -1,13 +1,25 @@
-﻿# BeastCore - Sistema para Academia
+# BeastCore - Sistema para Academia
 
 **Feito por Victor Marra da I1D35**
 
-Aplicação procedural básica em **PHP com PDO** e **PostgreSQL**, no estilo
-"PHP básico" (funções com `$conexao` e `bindParam`, includes de header/footer).
+Aplicacao procedural basica em PHP com PDO e PostgreSQL, no estilo PHP basico (includes de header/footer e consultas com bindParam).
 
----
+## Estrutura das Pastas
 
-## Configuração do Banco de Dados (`database/connect.php`)
+```
+BeastCore/
+?
+??? admin/           # Area administrativa (planos, usuarios, professores, unidades)
+??? database/        # Conexao com banco e demo.sqlite
+??? includes/        # Funcoes e headers de cada pagina
+??? login/           # Login, cadastro e logout
+??? pages/           # Paginas para o aluno/usuario
+??? style/           # Arquivo CSS
+??? banco.sql        # Script SQL para importar
+??? index.php        # Pagina inicial
+```
+
+## Configuracao do Banco (`database/connect.php`)
 
 ```php
 $host   = "192.168.10.41";
@@ -16,56 +28,21 @@ $user   = "beastcore";
 $pass   = "beastcore";
 ```
 
----
-
 ## Regras de Acesso
 
-- **Acesso Público**: `index.php`, `pages/exercicios.php`, `pages/unidades.php`,
-  `pages/planos.php`.
-- **Exige Login**: `pages/treinos.php`, `pages/progresso.php`, `pages/mensagens.php`.
-- **Só Admin** (`usuarios.tipo = 'admin'`): `admin/usuarios.php`, `admin/planos.php`
-  e o cadastro de exercícios em `pages/exercicios.php` (alunos apenas visualizam a lista).
+- **Publico:** `index.php`, `pages/exercicios.php`, `pages/unidades.php`, `pages/planos.php`
+- **Precisa logar:** `pages/treinos.php`, `pages/progresso.php`, `pages/mensagens.php`
+- **Somente Admin:** `admin/usuarios.php`, `admin/planos.php`, `admin/professores.php`, `admin/unidades.php`
 
----
+## Login Admin
 
-## Área do Admin
+Pelo link "Admin" no site ou direto `admin/login.php`:
+- Usuario: `beastcore`
+- Senha: `123456`
 
-Para entrar no admin, use o link **Admin** que aparece na área de "entrar"
-(login) do site:
-
-- **Usuário**: `beastcore`
-- **Senha**: `123456`
-
-Depois de logar, aparecem duas abas no menu:
-
-- **Usuários** (`admin/usuarios.php`): lista todas as pessoas do banco de dados
-  (id, nome, e-mail, nascimento, tipo).
-- **Gerenciar Planos** (`admin/planos.php`): criar, alterar e excluir planos.
-
-> Contas normais de `usuarios` com `tipo = 'admin'` também continuam entrando
-> pela tela de login comum (`login/login.php`).
-
----
-
-## Headers
-
-Cada página tem o seu próprio cabeçalho em `includes/` (`header_index.php`,
-`header_login.php`, `header_exercicios.php`, `header_usuarios.php`, etc.),
-incluído de forma simples com `include`. Nada de framework.
-
----
-
-## Tabelas Utilizadas
-
-- `usuarios` (nome, email, senha, data_nascimento, tipo)
-- `unidades` (nome, endereco, telefone, horario)
-- `planos` (nome, preco, descricao)
-- `exercicios` (nome, grupo_muscular, descricao)
-- `treinos` (nome, descricao, usuario_id)
-- `progresso` (usuario_id, peso, data_registro, observacao)
-- `mensagens` (nome, telefone, email, plano, mensagem, lida, data_envio)
-
----
+Login comum com conta admin:
+- Email: `marravictor6@gmail.com`
+- Senha: `admin123`
 
 ## Como Rodar
 
@@ -73,20 +50,10 @@ incluído de forma simples com `include`. Nada de framework.
 php -d extension=pdo_sqlite -S 127.0.0.1:8000
 ```
 
-Depois abra `http://127.0.0.1:8000` no navegador.
+Abrir: `http://127.0.0.1:8000`
 
----
+## Banco de Demonstracao
 
-## Banco de demonstração (quando o PostgreSQL está offline)
-
-O `connect.php` tenta primeiro o PostgreSQL (`192.168.10.41`). Se ele não
-estiver acessível, o site usa um banco local de demonstração em
-`database/demo.sqlite` (SQLite), só para visualizar as telas.
-**O PostgreSQL não é alterado em nenhum momento.**
-
-Contas do demo:
-
-- `admin@beastcore.com` / `admin123` (tipo admin)
-- `aluno@exemplo.com` / `123456` (tipo aluno)
+Se o PostgreSQL estiver offline, o site usa `database/demo.sqlite` automaticamente. O banco PostgreSQL nao e alterado.
 
 **Feito por Victor Marra da I1D35**
