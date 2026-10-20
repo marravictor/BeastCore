@@ -275,4 +275,15 @@ function deletar_professor($conexao, $id)
 
     echo "<p class='ok'>Professor $id deletado.</p>";
 }
+
+function deletar_usuario($conexao, $id)
+{
+    $sql = "DELETE FROM usuarios WHERE id = :id";
+
+    $stmt = $conexao->prepare($sql);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+
+    echo "<p class='ok'>Usuário $id deletado.</p>";
+}
 ?>

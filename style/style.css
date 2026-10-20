@@ -447,6 +447,19 @@ input[type="submit"]:hover {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.55);
 }
 
+.btn-del {
+    background: linear-gradient(180deg, #dc2626, #991b1b);
+    box-shadow: 0 8px 18px rgba(220, 38, 38, 0.35);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-del:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(220, 38, 38, 0.5);
+}
+
 /* ---------- Formulários ---------- */
 
 form {

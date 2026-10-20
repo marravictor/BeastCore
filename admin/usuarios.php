@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/verifica_admin.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user'])) {
+    $id = (int)$_POST['user_id'];
+    deletar_usuario($conexao, $id);
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -8,7 +13,7 @@ require_once __DIR__ . '/verifica_admin.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/BeastCore/style/style.css">
     <title>Usuários - Admin BeastCore</title>
 </head>
 
@@ -27,6 +32,7 @@ require_once __DIR__ . '/verifica_admin.php';
                 <th>E-mail</th>
                 <th>Nascimento</th>
                 <th>Tipo</th>
+                <th>Ações</th>
             </tr>
             <?php foreach ($usuarios as $u) { ?>
                 <tr>
@@ -35,9 +41,13 @@ require_once __DIR__ . '/verifica_admin.php';
                     <td><?php echo htmlspecialchars($u['email']); ?></td>
                     <td><?php echo htmlspecialchars($u['data_nascimento']); ?></td>
                     <td><?php echo htmlspecialchars($u['tipo']); ?></td>
-                    <input type="submit" value="Cadastrar professor">
+                    <td>
+                        <form method="post" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
+                            <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
+                            <button type="submit" name="delete_user" class="btn-del">Excluir</button>
+                        </form>
+                    </td>
                 </tr>
-        </form>
             <?php } ?>
         </table>
         <?php if (empty($usuarios)) { ?>
@@ -45,7 +55,7 @@ require_once __DIR__ . '/verifica_admin.php';
         <?php } ?>
 
         <hr>
-        <p><a href="/admin/planos.php">Gerenciar planos</a></p>
+        <p><a href="/BeastCore/admin/planos.php">Gerenciar planos</a></p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>
