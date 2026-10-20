@@ -1,13 +1,14 @@
 <?php
+require_once __DIR__ . '/../includes/config.php';
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }
 if (!isset($_SESSION['id'])) {
-    header("Location: /login/login.php");
+    header("Location: " . url('login/login.php'));
     exit();
 }
 if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != "admin") {
-    header("Location: /index.php");
+    header("Location: " . url('index.php'));
     exit();
 }
 ?>

@@ -1,4 +1,7 @@
-<?php require_once __DIR__ . '/../includes/functions.php'; ?>
+<?php 
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/config.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -29,7 +32,7 @@
                 $_SESSION['nome']  = $usuario['nome'];
                 $_SESSION['email'] = $usuario['email'];
                 $_SESSION['tipo']  = $usuario['tipo'];
-                header("Location: /index.php");
+                header("Location: " . url('index.php'));
                 exit();
             } else {
                 echo "<p class='erro'>Usuário ou senha inválidos.</p>";

@@ -21,7 +21,7 @@
     <?php if (isset($_SESSION['id'])) { ?>
         <p class="logado">Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?> - <a href="/BeastCore/login/logout.php">Sair</a></p>
     <?php } else { ?>
-        <form class="entrar" action="/login/login.php" method="post">
+        <form class="entrar" action="/BeastCore/login/login.php" method="post">
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="senha" placeholder="Senha" required>
             <input type="submit" value="Entrar">

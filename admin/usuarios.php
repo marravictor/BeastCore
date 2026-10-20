@@ -43,7 +43,7 @@ require_once __DIR__ . '/verifica_admin.php';
         <?php } ?>
 
         <hr>
-        <p><a href="/admin/planos.php">Gerenciar planos</a></p>
+        <p><a href="/BeastCore/admin/planos.php">Gerenciar planos</a></p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>

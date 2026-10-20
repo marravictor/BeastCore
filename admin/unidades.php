@@ -107,9 +107,9 @@ require_once __DIR__ . '/verifica_admin.php';
 
         <hr>
         <p>
-            <a href="/admin/usuarios.php">Ver usuários</a> |
-            <a href="/admin/professores.php">Professores</a> |
-            <a href="/admin/planos.php">Gerenciar planos</a>
+            <a href="/BeastCore/admin/usuarios.php">Ver usuários</a> |
+            <a href="/BeastCore/admin/professores.php">Professores</a> |
+            <a href="/BeastCore/admin/planos.php">Gerenciar planos</a>
         </p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>

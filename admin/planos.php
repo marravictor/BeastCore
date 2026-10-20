@@ -84,7 +84,7 @@ require_once __DIR__ . '/verifica_admin.php';
                 <textarea name="descricao"><?php echo htmlspecialchars($p['descricao']); ?></textarea>
 
                 <input type="submit" value="Salvar alterações">
-                <a href="planos.php?del=<?php echo $p['id']; ?>">Excluir</a>
+                <a href="/BeastCore/admin/planos.php?del=<?php echo $p['id']; ?>">Excluir</a>
             </form>
         <?php } ?>
 

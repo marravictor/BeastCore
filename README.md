@@ -202,6 +202,75 @@ SELECT setval('mensagens_id_seq', (SELECT MAX(id) FROM mensagens));
 
 ---
 
+## 🖥️ Deploy em VPS / Servidor Próprio (var/www/html)
+
+Se o professor tem um servidor próprio (Ubuntu/Debian/CentOS) e quer rodar em `var/www/html`:
+
+### 1. No servidor (SSH)
+```bash
+# Entra na pasta web
+cd /var/www/html
+
+# Clona o repositório (usa o SEU git)
+git clone https://github.com/marravictor/BeastCore.git
+
+# Entra na pasta
+cd BeastCore
+
+# Cria o banco SQLite local (desenvolvimento) ou configure PostgreSQL
+php database/init_db.php
+
+# Dá permissão pro servidor web acessar o banco
+chown -R www-data:www-data database/
+chmod 664 database/demo.sqlite
+```
+
+### 2. Configurar Apache/Nginx
+**Apache** (`/etc/apache2/sites-available/000-default.conf`):
+```apache
+DocumentRoot /var/www/html/BeastCore
+<Directory /var/www/html/BeastCore>
+    AllowOverride All
+    Require all granted
+</Directory>
+```
+```bash
+sudo a2enmod rewrite
+sudo systemctl reload apache2
+```
+
+**Nginx** (`/etc/nginx/sites-available/default`):
+```nginx
+root /var/www/html/BeastCore;
+index index.php;
+
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+
+location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+}
+```
+
+### 3. Para usar PostgreSQL no VPS (produção)
+Edite `/var/www/html/BeastCore/.env` (crie o arquivo):
+```bash
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=beastcore
+DB_USER=postgres
+DB_PASS=sua_senha_postgres
+BASE_PATH=/BeastCore
+```
+> **Importante**: `BASE_PATH=/BeastCore` faz os links funcionarem na subpasta.
+
+### 4. Acesse
+- `http://SEU_IP/BEASTCORE/` ou `http://SEU_IP/` (se DocumentRoot for a pasta BeastCore)
+
+---
+
 ## 🔧 Como funciona a mágica (connect.php)
 
 ```php

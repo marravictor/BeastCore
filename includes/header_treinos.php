@@ -10,5 +10,5 @@
         <a href="/BeastCore/pages/planos.php">Planos</a>
     </nav>
 
-    <p class="logado">Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?> - <a href="/login/logout.php">Sair</a></p>
+    <p class="logado">Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?> - <a href="/BeastCore/login/logout.php">Sair</a></p>
 </header>

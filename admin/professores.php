@@ -71,7 +71,7 @@ require_once __DIR__ . '/verifica_admin.php';
                     <td><?php echo htmlspecialchars($p['nome']); ?></td>
                     <td><?php echo htmlspecialchars($p['email']); ?></td>
                     <td><?php echo htmlspecialchars($p['data_nascimento']); ?></td>
-                    <td><a href="professores.php?del=<?php echo $p['id']; ?>">Excluir</a></td>
+                    <td><a href="/BeastCore/admin/professores.php?del=<?php echo $p['id']; ?>">Excluir</a></td>
                 </tr>
             <?php } ?>
         </table>

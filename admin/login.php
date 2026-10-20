@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -32,7 +33,7 @@ require_once __DIR__ . '/../includes/functions.php';
                 $_SESSION['email'] = "beastcore";
                 $_SESSION['tipo']  = "admin";
 
-                header("Location: /admin/usuarios.php");
+                header("Location: " . url('admin/usuarios.php'));
                 exit();
             } else {
                 echo "<p class='erro'>Usuário ou senha do admin inválidos.</p>";

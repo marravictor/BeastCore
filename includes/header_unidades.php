@@ -19,13 +19,13 @@
     </nav>
 
     <?php if (isset($_SESSION['id'])) { ?>
-        <p class="logado">Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?> - <a href="/login/logout.php">Sair</a></p>
+        <p class="logado">Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?> - <a href="/BeastCore/login/logout.php">Sair</a></p>
     <?php } else { ?>
-        <form class="entrar" action="/login/login.php" method="post">
+        <form class="entrar" action="/BeastCore/login/login.php" method="post">
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="senha" placeholder="Senha" required>
             <input type="submit" value="Entrar">
         </form>
-        <p class="logado">Novo por aqui? <a href="/login/cadastrar.php">Cadastre-se</a> | <a href="/admin/login.php">Admin</a></p>
+        <p class="logado">Novo por aqui? <a href="/BeastCore/login/cadastrar.php">Cadastre-se</a> | <a href="/BeastCore/admin/login.php">Admin</a></p>
     <?php } ?>
 </header>

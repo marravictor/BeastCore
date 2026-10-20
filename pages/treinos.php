@@ -52,7 +52,7 @@ require_once __DIR__ . '/../login/verifica_user.php';
                     <td><?php echo $t['id']; ?></td>
                     <td><?php echo htmlspecialchars($t['nome']); ?></td>
                     <td><?php echo htmlspecialchars($t['descricao']); ?></td>
-                    <td><a href="treinos.php?del=<?php echo $t['id']; ?>">Deletar</a></td>
+                    <td><a href="/BeastCore/pages/treinos.php?del=<?php echo $t['id']; ?>">Deletar</a></td>
                 </tr>
             <?php } ?>
         </table>
