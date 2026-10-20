@@ -1,165 +1,190 @@
-# BeastCore - Sistema de Academia
+﻿# BeastCore
 
-**Desenvolvido por Victor Marra da I1D35**
+**Feito por:** Victor Marra (marravictor) - I1D35
 
-BeastCore é um site de academia desenvolvido em PHP básico e procedural, HTML5, CSS3, PostgreSQL com PDO e sessões PHP. Foi feito com foco em ser simples, funcional, seguro e fácil de entender — ideal para aprendizado e apresentação.
-
----
-
-## 1. Objetivo
-
-Este sistema tem como objetivo gerenciar informações de uma academia: alunos, professores, planos, exercícios, unidades, treinos, progresso e mensagens de contato.
+Sistema de academia desenvolvido em PHP básico e procedural, HTML5, CSS3, PostgreSQL com PDO e sessões PHP. Simples, organizado e fácil de entender.
 
 ---
 
-## 2. Tecnologias Utilizadas
+## 1. Pré-requisitos
 
-- PHP 
-- HTML5
-- CSS (moderno, responsivo e centralizado)
-- PostgreSQL com PDO
-- SQLite (fallback para visualização quando PostgreSQL não estiver acessível)
-- Sessões PHP
-- JavaScript não utilizado (apenas HTML+CSS+PHP básico)
+Antes de começar, verifique se você tem instalado:
+
+- [PHP](https://www.php.net/) (versão 8.x ou superior)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Git](https://git-scm.com/)
 
 ---
 
-## 3. Estrutura do Projeto
+## 2. Clonar o repositório
 
+Abra o **Mobaxterm** (ou terminal) e execute:
+
+```bash
+git clone https://github.com/marravictor/BeastCore.git
 ```
-BeastCore/
-├── admin/                # Área administrativa
-│   ├── login.php         # Login do admin (hardcoded: beastcore/123456)
-│   ├── planos.php        # Gerenciar planos (criar/editar/excluir)
-│   ├── professores.php   # Cadastrar/excluir professores (tipo = professor)
-│   ├── unidades.php       # Gerenciar unidades (cadastrar/editar/excluir)
-│   ├── usuarios.php      # Listar usuários
-│   └── verifica_admin.php# Proteção de rotas admin
-├── app/                  # Arquivos auxiliares (não utilizados pelas páginas principais)
-├── database/
-│   ├── connect.php       # Conexão PG → fallback SQLite
-│   └── demo.sqlite       # Banco de demonstração (apenas leitura quando PG offline)
-├── includes/
-│   ├── footer.php        # Rodapé padrão
-│   ├── functions.php     # Funções reutilizáveis
-│   ├── header_*.php      # Headers por página (padrão: um por página)
-│   ├── header_professores.php
-│   └── header_admin_unidades.php
-├── login/
-│   ├── cadastrar.php     # Cadastro de alunos
-│   ├── login.php         # Login de usuários
-│   ├── logout.php        # Encerramento de sessão
-│   └── verifica_user.php # Proteção de rotas com login
-├── pages/
-│   ├── exercicios.php    # Exercícios (form só para admin)
-│   ├── mensagens.php     # Fale conosco / mensagens
-│   ├── planos.php        # Página pública de planos
-│   ├── progresso.php     # Progresso do aluno
-│   ├── treinos.php       # Treinos do aluno
-│   └── unidades.php      # Unidades da academia
-├── style/
-│   └── style.css         # CSS unificado (preto + vermelho + responsivo)
-├── index.php             # Página inicial (landing page)
-└── README.md             # Documentação principal
+
+Depois entre na pasta do projeto:
+
+```bash
+cd BeastCore
 ```
 
 ---
 
-## 4. Banco de Dados (PostgreSQL)
+## 3. Criar o banco de dados no PostgreSQL
 
-**Créditos:** O banco original não foi alterado. Apenas leitura e inserções seguras (com prepared statements). Professores são gravados na mesma tabela `usuarios`.
+Abra o PostgreSQL com o usuário postgres:
 
-### Tabelas
+```bash
+psql -U postgres
+```
 
-| Tabela | Descrição |
-|---|---|
-| `usuarios` | Usuários do sistema. Campos: `id`, `nome`, `email`, `senha`, `data_nascimento`, `tipo` (valores: `aluno`, `admin`, `professor`). |
-| `unidades` | Unidades da academia. |
-| `planos` | Planos de assinatura (nome, preço, descrição). |
-| `exercicios` | Biblioteca de exercícios. |
-| `treinos` | Treinos por usuário. |
-| `treino_exercicios` | Relação treino x exercícios. |
-| `progresso` | Registro de progresso por usuário. |
-| `mensagens` | Contatos recebidos. |
+Dentro do psql, crie o banco de dados:
 
-**Conexão:** `database/connect.php` tenta conectar ao PostgreSQL em `192.168.10.41:5432/db=beastcore` (usuário/senha: `beastcore`). Caso não consiga, usa `database/demo.sqlite` para demonstração.
+```sql
+CREATE DATABASE beastcore;
+```
 
----
+Saia do psql:
 
-## 5. Regras de Acesso
-
-| Área | Condição |
-|---|---|
-| Público | `index.php`, `pages/exercicios.php`, `pages/unidades.php`, `pages/planos.php` |
-| Exige login | `pages/treinos.php`, `pages/progresso.php`, `pages/mensagens.php` |
-| Apenas Admin | `admin/usuarios.php`, `admin/planos.php`, `admin/professores.php` |
-| Exercícios | Lista pública. **Apenas admins** podem cadastrar novos exercícios. Alunos só visualizam. |
+```sql
+\q
+```
 
 ---
 
-## 6. Área Administrativa
+## 4. Importar as tabelas e dados
 
-Acesso via: `admin/login.php`
+Importe o arquivo `banco.sql` (que já está dentro do projeto) para o banco `beastcore`:
 
-**Login padrão:**
+```bash
+psql -U postgres -d beastcore -f banco.sql
+```
+
+Pronto! O banco vai ficar com todas as tabelas, usuários, planos, exercícios e a unidade já cadastrados.
+
+---
+
+## 5. Configurar a conexão com o banco
+
+Abra o arquivo `database/connect.php` com um editor de texto.
+
+**Caso esteja rodando na mesma máquina (localhost):**
+
+Altere as linhas para:
+
+```php
+$host   = "localhost";
+$dbname = "beastcore";
+$user   = "postgres";
+$pass   = "SUA_SENHA_DO_POSTGRES";
+```
+
+**Caso esteja rodando em servidor da sala (padrão):**
+
+Pode deixar como está:
+
+```php
+$host   = "192.168.10.41";
+$dbname = "beastcore";
+$user   = "beastcore";
+$pass   = "beastcore";
+```
+
+> Salve o arquivo após a alteração.
+
+---
+
+## 6. Rodar o servidor PHP
+
+Dentro da pasta `BeastCore`, execute:
+
+```bash
+php -S 0.0.0.0:8000
+```
+
+Ou, se preferir localhost:
+
+```bash
+php -S localhost:8000
+```
+
+O servidor irá iniciar. Deixe o terminal aberto.
+
+---
+
+## 7. Acessar o site
+
+Abra o navegador e digite:
+
+```
+http://localhost:8000
+```
+
+Ou:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## 8. Logins para testar
+
+### Área Administrativa (Admin)
+
+**Login específico do Admin:**
 - Usuário: `beastcore`
 - Senha: `123456`
 
-**Recursos:**
-- `Usuários` – lista todos os usuários (ID, nome, e-mail, nascimento, tipo)
-- `Professores` – cadastra/exclui professores (salvos com `tipo = 'professor'`). Campos: nome, e-mail, senha, data de nascimento. Senha com `password_hash`. E-mail único.
-- `Gerenciar Planos` – criar, editar e excluir planos
+**Login comum (com tipo admin):**
+- E-mail: `marravictor6@gmail.com`
+- Senha: `admin123`
+
+**Outro Admin:**
+- E-mail: `admin@beastcore.com`
+- Senha: `123456`
+
+### Aluno
+
+- E-mail: `aluno@exemplo.com`
+- Senha: `123456`
 
 ---
 
-## 7. Segurança
+## 9. Sobre o arquivo `database/demo.sqlite`
 
-- `PDO::prepare` + `bindParam` em todas as consultas
-- `password_hash` e `password_verify`
-- `htmlspecialchars` para saída de dados
-- Sessões para controle de acesso
-- Proteção: `verifica_admin.php` (exige `tipo == 'admin'`) e `verifica_user.php` (exige login)
-- Cabeçalhos por página e includes isolados
+O arquivo `database/demo.sqlite` está na pasta `database/` e **serve apenas como banco de demonstração**.
 
----
+- Se o **PostgreSQL estiver online e conseguir conectar**, o site **ignora** o `demo.sqlite` e usa o **PostgreSQL**.
+- Se o **PostgreSQL estiver offline**, o site **usa automaticamente** o `demo.sqlite` para conseguir visualizar o site (modo demonstração).
 
-## 8. Layout e Visual
-
-- Tema: preto (#000) + vermelho (#ef4444) para destaques
-- Tipografia legível, títulos mais destacados
-- Cards, botões com hover, sombras suaves
-- Responsivo para PC, tablet e celular
-- Estados vazios com mensagem elegante
-- Logo clicável para voltar ao início
-- Saudação ao usuário logado
+**Não é necessário mexer nesse arquivo.** Basta deixá-lo na pasta.
 
 ---
 
-## 9. Como Executar
+## 10. Estrutura do Projeto
 
-### No Windows (ambiente atual)
-
-Servidor embutido do PHP:
-
-```powershell
-cd C:\Users\I1D35\Documents\BeastCore
-php -S localhost:8000
 ```
-Abrir no navegador: `http://localhost:8000/`
+BeastCore/
+├── admin/                # Área do administrador
+├── database/             # Conexão com banco + demo.sqlite
+├── includes/             # Funções e headers
+├── login/                # Login, cadastro e logout
+├── pages/                # Páginas públicas e privadas
+├── style/                # CSS do site
+├── index.php             # Página inicial
+├── banco.sql             # SQL para importar no PostgreSQL
+└── README.md             # Este arquivo
+```
 
 ---
 
-## 11. Comentários no Código
+## 11. Observações
 
-Todo o código foi **comentado em português** para facilitar leitura e manutenção:
-- `includes/functions.php` – funções agrupadas por módulo (Login, Treinos, Progresso, Mensagens, Exercícios, Planos, Unidades, Admin, Professores)
-- Páginas admin – lógica clara e incremental
-- Páginas públicas/privadas – fluxo simples e direto
-- CSS organizado com variáveis CSS (`:root`)
----
-## 13. Autoria
-
-**Feito por Victor Marra da I1D35**  
-Data: Outubro de 2026
-
-Projeto desenvolvido sem frameworks. Código minimalista, didático e funcional.
+- Projeto feito em PHP **básico e procedural** (sem frameworks).
+- Usa `PDO` com consultas preparadas para maior segurança.
+- Senhas estão com `password_hash` no banco.
+- O banco PostgreSQL **não é alterado automaticamente**. Tudo feito de forma segura e manual quando necessário.
+- Feito por **Victor Marra (marravictor) - I1D35**.
