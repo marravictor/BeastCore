@@ -228,24 +228,36 @@ chown -R www-data:www-data database/
 chmod 664 database/demo.sqlite
 ```
 
-### Nginx (Ubuntu) - corrige 404 no login
+### Apache (Ubuntu) - **mais simples, instala e roda**
 
 ```bash
-# 1. Instala PHP-FPM
-sudo apt update && sudo apt install -y nginx php8.3-fpm php8.3-pgsql php8.3-sqlite3
+# 1. Instala Apache + PHP (mod_php já processa .php automaticamente)
+sudo apt update && sudo apt install -y apache2 libapache2-mod-php php-pgsql php-sqlite3
 
-# 2. Config simples (copie o arquivo nginx-simple.conf deste repo)
+# 2. Aponta pro BeastCore
+sudo sed -i 's|/var/www/html|/var/www/html/BeastCore|g' /etc/apache2/sites-available/000-default.conf
+
+# 3. Habilita rewrite (para URLs bonitas)
+sudo a2enmod rewrite
+
+# 4. Reinicia
+sudo systemctl reload apache2
+```
+
+Pronto! Acessa `http://IP_DO_SERVIDOR/`
+
+---
+
+### Nginx (se já tiver instalado)
+
+```bash
+sudo apt install -y php8.3-fpm php8.3-pgsql php8.3-sqlite3
 sudo cp nginx-simple.conf /etc/nginx/sites-available/beastcore
-# Edite a versão do PHP se necessário: php8.1, php8.2, php8.3
-# Verifique: ls /run/php/php*-fpm.sock
-
-# 3. Ativa
+# Edite a versão PHP: ls /run/php/php*-fpm.sock
 sudo ln -sf /etc/nginx/sites-available/beastcore /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t && sudo systemctl reload nginx
 ```
-
-Pronto! Acessa `http://IP_DO_SERVIDOR/`
 
 ---
 
