@@ -8,7 +8,6 @@ Abra o Mobaxterm e cole este comando:
 
 ```bash
 git clone https://github.com/marravictor/BeastCore.git
-cd BeastCore
 ```
 
 ## 2. Criar o banco de dados
