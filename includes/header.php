@@ -15,10 +15,10 @@
                 <a href="/BeastCore/admin/planos.php">Gerenciar Planos</a>
         <a href="/BeastCore/admin/unidades.php">Gerenciar Unidades</a>
             <?php } ?>
-            <a href="/BeastCore/login/logout.php">Sair</a>
+            <a href="../login/logout.php">Sair</a>
         <?php } else { ?>
-            <a href="/BeastCore/login/login.php">Entrar</a>
-            <a href="/BeastCore/login/cadastrar.php">Cadastre-se</a>
+            <a href="../login/login.php">Entrar</a>
+            <a href="../login/cadastrar.php">Cadastre-se</a>
         <?php } ?>
     </nav>
 </header>

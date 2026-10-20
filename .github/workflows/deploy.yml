@@ -1,25 +1,17 @@
-name: Deploy to Server
+name: Deploy Automatico no Servidor
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main  # Altere para 'master' se for o nome da sua branch principal
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
-
-      - name: Deploy to server
+      - name: Atualizar código no servidor
         run: |
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-            cd ${{ secrets.DEPLOY_PATH }} &&
-            git pull origin main &&
-            echo '✅ Deploy concluído!'
-          "
+          cd /caminho/completo/do/seu/projeto
+          git pull origin main
+          # Adicione aqui comandos adicionais de build/restart se necessário

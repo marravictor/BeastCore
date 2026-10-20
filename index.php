@@ -19,9 +19,9 @@
                 <h1>Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>!</h1>
                 <p>Que bom te ver de volta na <strong>BeastCore</strong>. Bora treinar?</p>
                 <div class="hero-botoes">
-                    <a class="btn" href="/pages/treinos.php">Meus Treinos</a>
-                    <a class="btn btn-sec" href="/pages/progresso.php">Meu Progresso</a>
-                    <a class="btn btn-sec" href="/pages/mensagens.php">Mensagens</a>
+                    <a class="btn" href="/BeastCore/pages/treinos.php">Meus Treinos</a>
+                    <a class="btn btn-sec" href="/BeastCore/pages/progresso.php">Meu Progresso</a>
+                    <a class="btn btn-sec" href="/BeastCore/pages/mensagens.php">Mensagens</a>
                 </div>
             </section>
 

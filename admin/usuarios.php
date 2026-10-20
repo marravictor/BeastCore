@@ -8,7 +8,7 @@ require_once __DIR__ . '/verifica_admin.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/BeastCore/style/style.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Usuários - Admin BeastCore</title>
 </head>
 
@@ -35,7 +35,9 @@ require_once __DIR__ . '/verifica_admin.php';
                     <td><?php echo htmlspecialchars($u['email']); ?></td>
                     <td><?php echo htmlspecialchars($u['data_nascimento']); ?></td>
                     <td><?php echo htmlspecialchars($u['tipo']); ?></td>
+                    <input type="submit" value="Cadastrar professor">
                 </tr>
+        </form>
             <?php } ?>
         </table>
         <?php if (empty($usuarios)) { ?>
@@ -43,7 +45,7 @@ require_once __DIR__ . '/verifica_admin.php';
         <?php } ?>
 
         <hr>
-        <p><a href="/BeastCore/admin/planos.php">Gerenciar planos</a></p>
+        <p><a href="/admin/planos.php">Gerenciar planos</a></p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>

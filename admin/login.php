@@ -33,7 +33,7 @@ require_once __DIR__ . '/../includes/config.php';
                 $_SESSION['email'] = "beastcore";
                 $_SESSION['tipo']  = "admin";
 
-                header("Location: " . url('admin/usuarios.php'));
+                header("Location: /BeastCore/admin/usuarios.php");
                 exit();
             } else {
                 echo "<p class='erro'>Usuário ou senha do admin inválidos.</p>";
