@@ -23,12 +23,7 @@ Este projeto roda **local (VS Code)**, **Moba**, **Heroku**, **Railway**, **Rend
 ```bash
 # 1. Clone
 git clone https://github.com/marravictor/BeastCore.git
-cd BeastCore
 
-# 2. Rode (PHP 8.1+ com pdo_sqlite)
-php -S localhost:8000
-
-# 3. Acesse
 # http://localhost:8000
 # Admin: admin@beastcore.com / 123456
 # Aluno: aluno@exemplo.com / 123456
