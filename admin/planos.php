@@ -33,18 +33,36 @@ require_once __DIR__ . '/verifica_admin.php';
         </form>
 
         <?php
-        // Cadastra ou altera conforme veio o formulário
+        // Cadastra ou altera
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if (isset($_POST['id']) && $_POST['id'] != "") {
-                atualizar_plano($conexao, $_POST['id'], $_POST['nome'], $_POST['preco'], $_POST['descricao']);
+                $sql = "UPDATE planos SET nome=:nome, preco=:preco, descricao=:descricao WHERE id=:id";
+                $stmt = $conexao->prepare($sql);
+                $stmt->bindParam(":nome", $_POST['nome']);
+                $stmt->bindParam(":preco", $_POST['preco']);
+                $stmt->bindParam(":descricao", $_POST['descricao']);
+                $stmt->bindParam(":id", $_POST['id']);
+                $stmt->execute();
+                echo "<p class='ok'>Plano atualizado.</p>";
             } else {
-                cadastrar_plano($conexao, $_POST['nome'], $_POST['preco'], $_POST['descricao']);
+                $sql = "INSERT INTO planos (nome, preco, descricao) VALUES (:nome,:preco,:descricao)";
+                $stmt = $conexao->prepare($sql);
+                $stmt->bindParam(":nome", $_POST['nome']);
+                $stmt->bindParam(":preco", $_POST['preco']);
+                $stmt->bindParam(":descricao", $_POST['descricao']);
+                $stmt->execute();
+                echo "<p class='ok'>Plano cadastrado.</p>";
             }
         }
 
         // Excluir
         if (isset($_GET['del'])) {
-            deletar_plano($conexao, (int) $_GET['del']);
+            $id = (int) $_GET['del'];
+            $sql = "DELETE FROM planos WHERE id = :id";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+            echo "<p class='ok'>Plano excluído.</p>";
         }
 
         $planos = listar_planos($conexao);

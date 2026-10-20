@@ -238,9 +238,7 @@ function cadastrar_professor($conexao, $nome, $email, $senha, $data_nascimento)
 {
     $senha = password_hash($senha, PASSWORD_DEFAULT);
     $tipo = "professor";
-
-    $sql = "INSERT INTO usuarios (nome, email, senha, data_nascimento, tipo) VALUES (:nome, :email, :senha, :data_nascimento, :tipo)";
-
+    $sql = "INSERT INTO usuarios (nome, email, senha, data_nascimento, tipo) VALUES (:nome,:email,:senha,:data_nascimento,:tipo)";
     $stmt = $conexao->prepare($sql);
     $stmt->bindParam(":nome", $nome);
     $stmt->bindParam(":email", $email);
@@ -248,7 +246,6 @@ function cadastrar_professor($conexao, $nome, $email, $senha, $data_nascimento)
     $stmt->bindParam(":data_nascimento", $data_nascimento);
     $stmt->bindParam(":tipo", $tipo);
     $stmt->execute();
-
     echo "<p class='ok'>Professor cadastrado com sucesso!</p>";
 }
 
