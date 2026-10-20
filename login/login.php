@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/BeastCore/style/style.css">
     <title>Login - BeastCore</title>
 </head>
 
@@ -36,7 +36,7 @@
             }
         }
         ?>
-        <p>Ainda não é aluno? <a href="/login/cadastrar.php">Cadastre-se aqui</a>.</p>
+        <p>Ainda não é aluno? <a href="/BeastCore/login/cadastrar.php">Cadastre-se aqui</a>.</p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>

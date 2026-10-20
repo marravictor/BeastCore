@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/BeastCore/style/style.css">
     <title>BeastCore - Academia</title>
 </head>
 
@@ -32,8 +32,8 @@
                 <p>Uma academia completa para quem quer ganhar força, saúde e disciplina.
                     Estrutura moderna, orientação de treino e um ambiente feito para evoluir.</p>
                 <div class="hero-botoes">
-                    <a class="btn" href="/login/cadastrar.php">Quero me cadastrar</a>
-                    <a class="btn btn-sec" href="/login/login.php">Já sou aluno</a>
+                    <a class="btn" href="/BeastCore/login/cadastrar.php">Quero me cadastrar</a>
+                    <a class="btn btn-sec" href="/BeastCore/login/login.php">Já sou aluno</a>
                 </div>
             </section>
 
@@ -120,7 +120,7 @@
                         </div>
                     <?php } ?>
                 </div>
-                <p class="mais"><a href="/pages/exercicios.php">Ver a biblioteca completa</a></p>
+                <p class="mais"><a href="/BeastCore/pages/exercicios.php">Ver a biblioteca completa</a></p>
             <?php
             }
             ?>
@@ -131,8 +131,8 @@
                 <h2>Pronto para começar?</h2>
                 <p>Crie sua conta na BeastCore e comece a montar seus treinos hoje mesmo.</p>
                 <div class="hero-botoes">
-                    <a class="btn" href="/login/cadastrar.php">Criar minha conta</a>
-                    <a class="btn btn-sec" href="/pages/planos.php">Ver planos</a>
+                    <a class="btn" href="/BeastCore/login/cadastrar.php">Criar minha conta</a>
+                    <a class="btn btn-sec" href="/BeastCore/pages/planos.php">Ver planos</a>
                 </div>
             </section>
         <?php } ?>

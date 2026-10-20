@@ -8,7 +8,7 @@ require_once __DIR__ . '/verifica_admin.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/BeastCore/style/style.css">
     <title>Professores - Admin BeastCore</title>
 </head>
 
@@ -82,8 +82,8 @@ require_once __DIR__ . '/verifica_admin.php';
 
         <hr>
         <p>
-            <a href="/admin/usuarios.php">Ver usuários</a> |
-            <a href="/admin/planos.php">Gerenciar planos</a>
+            <a href="/BeastCore/admin/usuarios.php">Ver usuários</a> |
+            <a href="/BeastCore/admin/planos.php">Gerenciar planos</a>
         </p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>

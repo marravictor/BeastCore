@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/BeastCore/style/style.css">
     <title>Planos - BeastCore</title>
 </head>
 
@@ -34,7 +34,7 @@
         <?php } ?>
 
         <hr>
-        <p>Quer treinar com a gente? <a href="/login/cadastrar.php">Cadastre-se aqui</a>.</p>
+        <p>Quer treinar com a gente? <a href="/BeastCore/login/cadastrar.php">Cadastre-se aqui</a>.</p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>

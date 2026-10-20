@@ -7,7 +7,7 @@ require_once __DIR__ . '/../includes/functions.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/BeastCore/style/style.css">
     <title>Entrar no Admin - BeastCore</title>
 </head>
 
@@ -39,7 +39,7 @@ require_once __DIR__ . '/../includes/functions.php';
             }
         }
         ?>
-        <p><a href="/login/login.php">Entrar como aluno</a></p>
+        <p><a href="/BeastCore/login/login.php">Entrar como aluno</a></p>
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>
