@@ -6,18 +6,15 @@
 
 // Carrega .env se existir (PHP não faz isso automático)
 $envFile = __DIR__ . '/../.env';
-if (file_exists($envFile)) {
-    $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0) continue; // comentário
-        if (strpos($line, '=') !== false) {
-            list($key, $value) = explode('=', $line, 2);
-            $key = trim($key);
-            $value = trim($value);
-            if (!array_key_exists($key, $_ENV)) {
+if (file_exists($envFile) && is_readable($envFile)) {
+    $lines = @file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if ($lines !== false) {
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || $line[0] === '#') continue;
+            if (strpos($line, '=') !== false) {
+                list($key, $value) = array_map('trim', explode('=', $line, 2));
                 $_ENV[$key] = $value;
-            }
-            if (getenv($key) === false) {
                 putenv("$key=$value");
             }
         }
@@ -25,18 +22,17 @@ if (file_exists($envFile)) {
 }
 
 function getBasePath(): string {
-    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+    // 1. Variável de ambiente BASE_PATH (do .env ou servidor)
+    $basePath = $_ENV['BASE_PATH'] ?? getenv('BASE_PATH') ?? '';
+    if ($basePath) return $basePath;
     
-    // 1. Detecta pela URL acessada (funciona no navegador)
+    // 2. Detecta pela URL acessada
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
     if (strpos($scriptName, '/BeastCore/') !== false) {
         return '/BeastCore';
     }
     
-    // 2. Variável de ambiente BASE_PATH (do .env ou servidor)
-    $basePath = $_ENV['BASE_PATH'] ?? getenv('BASE_PATH') ?? '';
-    if ($basePath) return $basePath;
-    
-    // 3. Fallback: se o arquivo está em pasta BeastCore, assume /BeastCore
+    // 3. Fallback: caminho do arquivo físico
     $scriptFile = $_SERVER['SCRIPT_FILENAME'] ?? '';
     if (strpos($scriptFile, '/BeastCore/') !== false) {
         return '/BeastCore';
