@@ -3,7 +3,7 @@ name: Deploy Automatico no Servidor
 on:
   push:
     branches:
-      - main  # Altere para 'master' se for o nome da sua branch principal
+      - main  # Altere para 'master' se a sua branch principal tiver esse nome
 
 jobs:
   deploy:
@@ -12,6 +12,5 @@ jobs:
     steps:
       - name: Atualizar código no servidor
         run: |
-          cd /caminho/completo/do/seu/projeto
+          cd /var/www/html/BeastCore
           git pull origin main
-          # Adicione aqui comandos adicionais de build/restart se necessário
