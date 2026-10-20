@@ -228,8 +228,28 @@ chown -R www-data:www-data database/
 chmod 664 database/demo.sqlite
 ```
 
-**Apache** - aponte DocumentRoot para `/var/www/html/BeastCore`  
-**Nginx** - aponte root para `/var/www/html/BeastCore`
+### Nginx (Ubuntu) - **ESSENCIAL para não dar 404**
+
+```bash
+# 1. Instala PHP-FPM + extensões (se não tiver)
+sudo apt update && sudo apt install -y nginx php8.3-fpm php8.3-pgsql php8.3-sqlite3 php8.3-mbstring php8.3-xml php8.3-curl
+
+# 2. Baixa config pronto (ou copie o arquivo nginx-beastcore.conf deste repo)
+sudo curl -o /etc/nginx/sites-available/beastcore https://raw.githubusercontent.com/marravictor/BeastCore/main/nginx-beastcore.conf
+
+# 3. Ajusta a versão do PHP no arquivo (procure php8.3-fpm.sock e mude se for 8.1, 8.2, etc)
+#    Verifique com: ls /run/php/php*-fpm.sock
+
+# 4. Ativa e reinicia
+sudo ln -sf /etc/nginx/sites-available/beastcore /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+**Ou use o script automático deste repo:**
+```bash
+curl -sSL https://raw.githubusercontent.com/marravictor/BeastCore/main/setup-nginx.sh | sudo bash
+```
 
 Pronto! Acessa `http://IP_DO_SERVIDOR/`
 
