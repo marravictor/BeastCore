@@ -2,77 +2,41 @@
 
 **Feito por:** Victor Marra (marravictor) - I1D35
 
-Sistema de academia desenvolvido em PHP básico e procedural, HTML5, CSS3, PostgreSQL com PDO e sessões PHP. Simples, organizado e fácil de entender.
-
----
+Sistema de academia desenvolvido em PHP básico e procedural, HTML5, CSS3, PostgreSQL com PDO e sessões PHP.
 
 ## 1. Pré-requisitos
 
-Antes de começar, verifique se você tem instalado:
-
-- [PHP](https://www.php.net/) (versão 8.x ou superior)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Git](https://git-scm.com/)
-
----
+- PHP 8.x ou superior
+- PostgreSQL
+- Git
 
 ## 2. Clonar o repositório
 
-Abra o **Mobaxterm** (ou terminal) e execute:
-
 ```bash
 git clone https://github.com/marravictor/BeastCore.git
-```
-
-Depois entre na pasta do projeto:
-
-```bash
 cd BeastCore
 ```
 
----
-
-## 3. Criar o banco de dados no PostgreSQL
-
-Abra o PostgreSQL com o usuário postgres:
+## 3. Criar banco no PostgreSQL
 
 ```bash
 psql -U postgres
 ```
 
-Dentro do psql, crie o banco de dados:
-
 ```sql
 CREATE DATABASE beastcore;
-```
-
-Saia do psql:
-
-```sql
 \q
 ```
 
----
-
-## 4. Importar as tabelas e dados
-
-Importe o arquivo `banco.sql` (que já está dentro do projeto) para o banco `beastcore`:
+## 4. Importar o banco
 
 ```bash
 psql -U postgres -d beastcore -f banco.sql
 ```
 
-Pronto! O banco vai ficar com todas as tabelas, usuários, planos, exercícios e a unidade já cadastrados.
+## 5. Configurar conexão
 
----
-
-## 5. Configurar a conexão com o banco
-
-Abra o arquivo `database/connect.php` com um editor de texto.
-
-**Caso esteja rodando na mesma máquina (localhost):**
-
-Altere as linhas para:
+Abra `database/connect.php`. Se for localhost, mude:
 
 ```php
 $host   = "localhost";
@@ -81,110 +45,91 @@ $user   = "postgres";
 $pass   = "SUA_SENHA_DO_POSTGRES";
 ```
 
-**Caso esteja rodando em servidor da sala (padrão):**
-
-Pode deixar como está:
-
-```php
-$host   = "192.168.10.41";
-$dbname = "beastcore";
-$user   = "beastcore";
-$pass   = "beastcore";
-```
-
-> Salve o arquivo após a alteração.
-
----
-
-## 6. Rodar o servidor PHP
-
-Dentro da pasta `BeastCore`, execute:
+## 6. Rodar o servidor
 
 ```bash
 php -S 0.0.0.0:8000
 ```
 
-Ou, se preferir localhost:
-
-```bash
-php -S localhost:8000
-```
-
-O servidor irá iniciar. Deixe o terminal aberto.
-
----
-
-## 7. Acessar o site
-
-Abra o navegador e digite:
+## 7. Acessar
 
 ```
 http://localhost:8000
 ```
 
-Ou:
+Ou pelo IP do servidor: `http://SEU-IP:8000`
 
-```
-http://127.0.0.1:8000
-```
+## 8. Logins
 
----
+**Admin (específico):** beastcore / 123456  
+**Admin:** marravictor6@gmail.com / admin123  
+**Admin:** admin@beastcore.com / 123456  
+**Aluno:** aluno@exemplo.com / 123456
 
-## 8. Logins para testar
-
-### Área Administrativa (Admin)
-
-**Login específico do Admin:**
-- Usuário: `beastcore`
-- Senha: `123456`
-
-**Login comum (com tipo admin):**
-- E-mail: `marravictor6@gmail.com`
-- Senha: `admin123`
-
-**Outro Admin:**
-- E-mail: `admin@beastcore.com`
-- Senha: `123456`
-
-### Aluno
-
-- E-mail: `aluno@exemplo.com`
-- Senha: `123456`
-
----
-
-## 9. Sobre o arquivo `database/demo.sqlite`
-
-O arquivo `database/demo.sqlite` está na pasta `database/` e **serve apenas como banco de demonstração**.
-
-- Se o **PostgreSQL estiver online e conseguir conectar**, o site **ignora** o `demo.sqlite` e usa o **PostgreSQL**.
-- Se o **PostgreSQL estiver offline**, o site **usa automaticamente** o `demo.sqlite` para conseguir visualizar o site (modo demonstração).
-
-**Não é necessário mexer nesse arquivo.** Basta deixá-lo na pasta.
-
----
-
-## 10. Estrutura do Projeto
+## 9. Estrutura de Pastas
 
 ```
 BeastCore/
-├── admin/                # Área do administrador
-├── database/             # Conexão com banco + demo.sqlite
-├── includes/             # Funções e headers
-├── login/                # Login, cadastro e logout
-├── pages/                # Páginas públicas e privadas
-├── style/                # CSS do site
-├── index.php             # Página inicial
-├── banco.sql             # SQL para importar no PostgreSQL
-└── README.md             # Este arquivo
+│
+├── admin/
+│   ├── login.php           # Login do administrador
+│   ├── planos.php          # Gerenciar planos
+│   ├── professores.php     # Gerenciar professores
+│   ├── unidades.php        # Gerenciar unidades
+│   ├── usuarios.php        # Listar usuários
+│   └── verifica_admin.php  # Verifica se é admin
+│
+├── database/
+│   ├── connect.php         # Conexão com PostgreSQL (ou SQLite fallback)
+│   └── demo.sqlite         # Banco de demonstração (só se PG offline)
+│
+├── includes/
+│   ├── footer.php          # Rodapé do site
+│   ├── functions.php       # Funções básicas
+│   ├── header_admin_planos.php
+│   ├── header_admin_unidades.php
+│   ├── header_cadastrar.php
+│   ├── header_exercicios.php
+│   ├── header_index.php    # Header da página inicial
+│   ├── header_login.php
+│   ├── header_mensagens.php
+│   ├── header_planos.php
+│   ├── header_professores.php
+│   ├── header_progresso.php
+│   ├── header_treinos.php
+│   ├── header_unidades.php
+│   ├── header_usuarios.php
+│   └── header.php          # Header antigo
+│
+├── login/
+│   ├── cadastrar.php       # Cadastro de alunos
+│   ├── login.php           # Login de usuários
+│   ├── logout.php          # Sair do sistema
+│   └── verifica_user.php   # Verifica se está logado
+│
+├── pages/
+│   ├── exercicios.php      # Lista de exercícios
+│   ├── mensagens.php       # Mensagens de contato
+│   ├── planos.php          # Planos da academia
+│   ├── progresso.php       # Progresso do aluno
+│   ├── treinos.php         # Treinos do aluno
+│   └── unidades.php        # Unidades da academia
+│
+├── style/
+│   └── style.css           # Estilos do site (CSS)
+│
+├── banco.sql               # Arquivo SQL para importar
+├── index.php               # Página inicial
+└── README.md               # Este arquivo
 ```
 
----
+## 10. Sobre o demo.sqlite
 
-## 11. Observações
+O arquivo `database/demo.sqlite` serve **apenas para visualização** caso o PostgreSQL esteja offline. Quando o PostgreSQL está online, ele é **ignorado** automaticamente.
 
-- Projeto feito em PHP **básico e procedural** (sem frameworks).
-- Usa `PDO` com consultas preparadas para maior segurança.
-- Senhas estão com `password_hash` no banco.
-- O banco PostgreSQL **não é alterado automaticamente**. Tudo feito de forma segura e manual quando necessário.
-- Feito por **Victor Marra (marravictor) - I1D35**.
+## 11. Rodar em segundo plano (MobaXterm/Servidor)
+
+```bash
+cd BeastCore
+nohup php -S 0.0.0.0:8000 > /dev/null 2>&1 &
+```
