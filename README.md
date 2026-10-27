@@ -4,316 +4,71 @@
 
 ---
 
-## 👨‍🏫 GUIA RÁPIDO PARA O PROFESSOR ACESSAR O SITE
-*(Passo a passo sem conhecimento técnico necessário)*
+## 👨‍🏫 PARA O PROFESSOR (Já tem o deploy no ar)
 
-### 🎯 Objetivo: Deixar o site no ar **pra sempre** no navegador (URL fixa)
+Se o professor já tem o site no ar no Moba/servidor e só precisa atualizar ou configurar, siga este passo a passo **simplificado**:
 
-### 📥 PASSO 0: Clonar o Repositório do GitHub
-**Basta copiar e colar este comando no terminal (Mobaxterm, PowerShell, Git Bash):**
+### 📥 PASSO 0: Clonar o repositório (só isto!)
 
 ```bash
+# No terminal (Mobaxterm, PowerShell, Git Bash)
 git clone https://github.com/marravictor/BeastCore.git
-```
 
-Depois entre na pasta:
-```bash
+# Entra na pasta
 cd BeastCore
-```
 
-*(Isso já deixa o código todo no seu servidor/PC)*
-
----
-
-### PASSO 1: Criar conta no Moba (grátis)
-1. Acesse: **https://moba.com** (ou **https://mobaxterm.mobatek.net** se for MobaXterm)
-2. Clique em **"Sign Up"** / **"Criar conta"**
-3. Use email do professor → confirme no email
-
----
-
-### PASSO 2: Criar o Banco de Dados (PostgreSQL)
-1. No painel do Moba → clique em **"+ New Service"** ou **"+ Add Service"**
-2. Escolha: **PostgreSQL** (ícone de elefante azul)
-3. Nome: `beastcore-db` (qualquer nome)
-4. Plano: **Free / Hobby** (grátis)
-5. Clique **Create** / **Criar**
-6. **AGUARDE** ficar verde **"Running"** (uns 30 seg)
-
----
-
-### PASSO 3: Pegar as credenciais do banco
-1. Clique no banco `beastcore-db` que acabou de criar
-2. Vá na aba **Connection Info** / **Conexão** / **Details**
-3. **COPIE** estes 5 valores (guarde num bloco de notas):
-   ```
-   Host:     postgres-xxx.moba.com     (ou IP interno tipo 10.x.x.x)
-   Port:     5432
-   Database: beastcore                 (nome do banco)
-   User:     postgres
-   Password: ********                  (clique no olho pra ver)
-   ```
-
----
-
-### PASSO 4: Criar o App (o site)
-1. No painel → **"+ New Service"** → **App** / **Web Service**
-2. **Source**: **GitHub** → conecte sua conta GitHub se pedir
-3. **Repository**: `marravictor/BeastCore` (selecione esse repo)
-4. **Branch**: `main`
-5. **Build Command**: *(deixe vazio)*
-6. **Start Command**: `php -S 0.0.0.0:$PORT`
-7. **NÃO clique em Deploy ainda!**
-
----
-
-### PASSO 5: Colar as variáveis de ambiente (O MAIS IMPORTANTE!)
-**Ainda na tela de criar o App**, procure **"Environment Variables"** / **"Variáveis de Ambiente"** / **"Env Vars"**
-
-**Adicione EXATAMENTE estas 5 linhas** (cole os valores do PASSO 3):
-
-| Key (Nome) | Value (Valor) |
-|------------|---------------|
-| `DB_HOST` | `postgres-xxx.moba.com` *(o Host do PASSO 3)* |
-| `DB_PORT` | `5432` |
-| `DB_NAME` | `beastcore` *(o Database do PASSO 3)* |
-| `DB_USER` | `postgres` *(o User do PASSO 3)* |
-| `DB_PASS` | `sua_senha_real` *(o Password do PASSO 3 - clique no olho)* |
-
-⚠️ **Cuidados:**
-- Sem aspas, sem espaços antes/depois
-- `DB_HOST` **NÃO** é `localhost` nem `192.168.x.x`
-- `DB_PASS` copie **exato** (maiúsculas/minúsculas/símbolos)
-
----
-
-### PASSO 6: Deploy!
-1. Clique **Deploy** / **Create & Deploy**
-2. Aguarde **2-3 minutos** (barra verde)
-3. Quando aparecer **"Running"** → **CLIQUE NA URL** (ex: `https://beastcore-xxx.moba.app`)
-
----
-
-### PASSO 7: Criar as tabelas (SÓ NA PRIMEIRA VEZ)
-1. No painel do App → aba **Console** / **Terminal** / **Shell**
-2. Digite e aperte Enter:
-   ```bash
-   php database/init_db.php
-   ```
-3. Deve aparecer:
-   ```
-   ✅ Banco de dados inicializado com sucesso!
-   📋 Tabelas criadas: usuarios, unidades, planos, exercicios, treinos, progresso, mensagens
-   👤 Login admin: admin@beastcore.com / 123456
-   👤 Login aluno: aluno@exemplo.com / 123456
-   ```
-
----
-
-### PASSO 8: Ajustar auto-incremento (SÓ NA PRIMEIRA VEZ)
-**Ainda no Console do Moba**, cole isto **todo de uma vez** e aperte Enter:
-
-```sql
-psql $DATABASE_URL -c "SELECT setval('usuarios_id_seq', (SELECT MAX(id) FROM usuarios)); SELECT setval('unidades_id_seq', (SELECT MAX(id) FROM unidades)); SELECT setval('planos_id_seq', (SELECT MAX(id) FROM planos)); SELECT setval('exercicios_id_seq', (SELECT MAX(id) FROM exercicios)); SELECT setval('treinos_id_seq', (SELECT MAX(id) FROM treinos)); SELECT setval('progresso_id_seq', (SELECT MAX(id) FROM progresso)); SELECT setval('mensagens_id_seq', (SELECT MAX(id) FROM mensagens));"
-```
-
-*Ou use o painel do banco → Query Tool → cole os 7 SELECT setval... um por um*
-
----
-
-### ✅ PRONTO! O SITE ESTÁ NO AR PRA SEMPRE
-
-**URL fixa:** `https://seu-app.moba.app` (guarde essa URL)
-
-**Logins:**
-| Perfil | Email | Senha |
-|--------|-------|-------|
-| **Professor/Admin** | `admin@beastcore.com` | `123456` |
-| **Aluno** | `aluno@exemplo.com` | `123456` |
-
----
-
-### 🔄 Atualizações futuras (quando aluno mudar código)
-1. Aluno faz mudança no VS Code
-2. `git add . && git commit -m "msg" && git push`
-3. **Moba faz deploy automático** (ou clique **Redeploy** no painel)
-4. Site atualiza sozinho na mesma URL
-
----
-
----
-
-## 🚀 Deploy Universal (Detalhes técnicos)
-
-Este projeto roda **local (VS Code)**, **Moba**, **Heroku**, **Railway**, **Render**, **VPS**, **Docker** - sem mudar código.
-
-### Arquivos principais:
-| Arquivo | Função |
-|---------|--------|
-| `beastcore_dump.sql` | **Dump universal** (schema + dados) - SQLite + PostgreSQL |
-| `database/connect.php` | Conexão automática (detecta PostgreSQL/SQLite via env vars) |
-| `database/init_db.php` | Inicializa banco com um comando: `php database/init_db.php` |
-| `DEPLOY.md` | Guia completo de deploy no Moba/Heroku/Railway/Render |
-
----
-
-## 🖥️ Desenvolvimento Local (VS Code)
-
-```bash
-# 1. Clone
-git clone https://github.com/marravictor/BeastCore.git
-
-# http://localhost:8000
-# Admin: admin@beastcore.com / 123456
-# Aluno: aluno@exemplo.com / 123456
-```
-
-**Resetar banco local:**
-```bash
-php database/init_db.php
-```
-
----
-
-## ☁️ Deploy no Moba (Resumo Técnico)
-
-### 1. Push pro GitHub
-```bash
-git add .
-git commit -m "Deploy universal ready"
-git push origin main
-```
-
-### 2. No painel do Moba
-- **Add Service** → **PostgreSQL**
-- **Environment Variables** (copie do banco criado):
-  ```
-  DB_HOST=seu-host.moba.com
-  DB_PORT=5432
-  DB_NAME=beastcore
-  DB_USER=postgres
-  DB_PASS=sua-senha
-  ```
-- **Start Command**: `php -S 0.0.0.0:$PORT`
-- **Deploy**
-
-### 3. Primeira vez no servidor (console do Moba)
-```bash
-php database/init_db.php
-```
-Ou importe `beastcore_dump.sql` via pgAdmin/DBeaver/painel do Moba.
-
-### 4. Ajuste sequences (só PostgreSQL)
-```sql
-SELECT setval('usuarios_id_seq', (SELECT MAX(id) FROM usuarios));
-SELECT setval('unidades_id_seq', (SELECT MAX(id) FROM unidades));
-SELECT setval('planos_id_seq', (SELECT MAX(id) FROM planos));
-SELECT setval('exercicios_id_seq', (SELECT MAX(id) FROM exercicios));
-SELECT setval('treinos_id_seq', (SELECT MAX(id) FROM treinos));
-SELECT setval('progresso_id_seq', (SELECT MAX(id) FROM progresso));
-SELECT setval('mensagens_id_seq', (SELECT MAX(id) FROM mensagens));
-```
-
----
-
-## 🖥️ Servidor Próprio (VPS) - O professor já tem banco
-
-O professor entra no servidor e faz:
-
-```bash
+# Mover para a pasta do site (se já tem Apache/Nginx configurado)
 cd /var/www/html
-git clone https://github.com/marravictor/BeastCore.git
-cd BeastCore
+# ou ficar na pasta BeastCore e apontar o servidor pra ela
+```
 
-# Se usa PostgreSQL (já tem banco):
-# Crie .env na pasta BeastCore com:
+---
+
+### 🔧 PASSO 1: Configurar o banco (arquivo .env)
+
+Crie o arquivo `.env` dentro da pasta `BeastCore` com os dados do banco do professor:
+
+```bash
 echo "DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=beastcore
 DB_USER=postgres
 DB_PASS=sua_senha
 BASE_PATH=/BeastCore" > .env
+```
 
-# Se usa SQLite (banco local):
-php database/init_db.php
+> **Importante**: Ajuste `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` com os dados do banco do professor. `BASE_PATH=/BeastCore` se o site estiver na subpasta.
 
-# Permissão no banco (se SQLite):
+---
+
+### 🔐 PASSO 2: Dar permissão no banco (se SQLite)
+
+```bash
 chown -R www-data:www-data database/
 chmod 664 database/demo.sqlite
 ```
 
-### Apache (Ubuntu) - **mais simples, instala e roda**
+---
 
+### ▶️ PASSO 3: Reiniciar o site
+
+**Apache:**
 ```bash
-# 1. Instala Apache + PHP (mod_php já processa .php automaticamente)
-sudo apt update && sudo apt install -y apache2 libapache2-mod-php php-pgsql php-sqlite3
-
-# 2. Aponta pro BeastCore
-sudo sed -i 's|/var/www/html|/var/www/html/BeastCore|g' /etc/apache2/sites-available/000-default.conf
-
-# 3. Habilita rewrite (para URLs bonitas)
-sudo a2enmod rewrite
-
-# 4. Reinicia
-sudo systemctl reload apache2
+sudo systemctl restart apache2
 ```
 
-Pronto! Acessa `http://IP_DO_SERVIDOR/`
-
----
-
-### Nginx (se já tiver instalado)
-
+**Nginx:**
 ```bash
-sudo apt install -y php8.3-fpm php8.3-pgsql php8.3-sqlite3
-sudo cp nginx-simple.conf /etc/nginx/sites-available/beastcore
-# Edite a versão PHP: ls /run/php/php*-fpm.sock
-sudo ln -sf /etc/nginx/sites-available/beastcore /etc/nginx/sites-enabled/
-sudo rm -f /etc/nginx/sites-enabled/default
-sudo nginx -t && sudo systemctl reload nginx
+sudo systemctl restart nginx
 ```
 
 ---
 
-## 🔧 Como funciona a mágica (connect.php)
+### ✅ Pronto!
 
-```php
-// 1. Lê variáveis de ambiente (produção)
-$host = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?? "192.168.10.41";
-// ...
+Acesse: `http://IP_DO_SERVIDOR/` ou `http://IP_DO_SERVIDOR/BeastCore/`
 
-// 2. Tem DB_HOST configurado? → PostgreSQL (Moba/Produção)
-// 3. Não tem? Testa conexão local PostgreSQL (sua rede)
-// 4. Falhou? → SQLite local (database/demo.sqlite)
-// 5. Nem isso? → SQLite em memória + init automático do dump
-```
-
-**Resultado**: Mesmo código, qualquer ambiente.
-
----
-
-## 📦 O que tem no Dump (`beastcore_dump.sql`)
-
-- ✅ **7 tabelas** com `CREATE TABLE IF NOT EXISTS`
-- ✅ **Dados seed** (5 usuários, 2 unidades, 3 planos, 5 exercícios, 2 treinos, 2 progressos, 1 mensagem)
-- ✅ **Compatível** SQLite E PostgreSQL
-- ✅ **Senhas** = bcrypt de "123456"
-
-### Tabelas:
-| Tabela | Descrição |
-|--------|-----------|
-| `usuarios` | Alunos, professores, admins |
-| `unidades` | Academias/filiais |
-| `planos` | Planos de assinatura |
-| `exercicios` | Biblioteca de exercícios |
-| `treinos` | Treinos dos alunos |
-| `progresso` | Histórico de peso/medidas |
-| `mensagens` | Contato/leads |
-
----
-
-## 🔑 Logins (padrão no dump)
-
+**Logins:**
 | Perfil | Email | Senha |
 |--------|-------|-------|
 | **Admin** | `admin@beastcore.com` | `123456` |
@@ -321,84 +76,26 @@ $host = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?? "192.168.10.41";
 
 ---
 
-## 📁 Estrutura das pastas
-
-```text
-BeastCore/
-├── admin/                 # Painel admin
-│   ├── login.php
-│   ├── planos.php
-│   ├── professores.php
-│   ├── unidades.php
-│   ├── usuarios.php
-│   └── verifica_admin.php
-├── app/                   # API/endpoints
-│   ├── create.php
-│   ├── select.php
-│   ├── select_w.php
-│   ├── update.php
-│   └── delete.php
-├── database/
-│   ├── connect.php        # Conexão UNIVERSAL (PG/SQLite)
-│   ├── init_db.php        # Inicializador automático
-│   └── demo.sqlite        # Banco local (ignorado no git)
-├── includes/              # Headers, footer, functions
-├── login/                 # Auth aluno
-│   ├── cadastrar.php
-│   ├── login.php
-│   ├── logout.php
-│   └── verifica_user.php
-├── pages/                 # Páginas do aluno
-│   ├── exercicios.php
-│   ├── mensagens.php
-│   ├── planos.php
-│   ├── progresso.php
-│   ├── treinos.php
-│   └── unidades.php
-├── style/
-│   └── style.css
-├── beastcore_dump.sql     # DUMP UNIVERSAL (schema + dados)
-├── DEPLOY.md              # Guia de deploy completo
-├── index.php              # Página inicial
-└── README.md              # Este arquivo
-```
-
----
-
-## 🛠️ Comandos Úteis
+## 🛠️ Comandos úteis afterward
 
 ```bash
-# Testar conexão
-php -r "require 'database/connect.php'; echo 'OK: ' . \$conexao->getAttribute(PDO::ATTR_DRIVER_NAME);"
+# Atualizar código no futuro (só isto!)
+git pull origin main
 
-# Recriar banco local do zero
-rm database/demo.sqlite
+# Recriar banco local do zero (se precisar)
 php database/init_db.php
-
-# Ver logs (se usar nohup)
-tail -f nohup.out
 ```
-
----
-
-## ⚠️ Troubleshooting
-
-| Problema | Solução |
-|----------|---------|
-| "Erro ao conectar ao banco" | Verifique `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` no Moba |
-| Tabelas não criam no PG | Rode `php database/init_db.php` no console do servidor |
-| Auto-incremento dá erro | Execute os comandos `setval` acima |
-| Login não funciona | Senha padrão é `123456` (hash bcrypt no dump) |
-| CSS/JS não carrega | Configure servidor web para servir arquivos estáticos |
 
 ---
 
 ## 📞 Suporte
 
-1. Verifique logs do Moba (aba **Logs**)
-2. Teste conexão: `php -r "require 'database/connect.php'; var_dump(\$conexao);"`
-3. Confirme extensões `pdo_pgsql` e `pdo_sqlite` ativas no PHP do servidor
+Se der erro:
+1. Verifique se o `.env` está correto na pasta `BeastCore/`
+2. Verifique permissões do banco (`chown www-data:www-data database/`)
+3. Rodando Apache: `sudo tail -f /var/log/apache2/error.log`
+4. Rodando Nginx: `sudo tail -f /var/log/nginx/error.log`
 
 ---
 
-**✨ Pronto! BeastCore roda em qualquer lugar - local, Moba, Heroku, Railway, Render, VPS, Docker...**
+**Pronto! O professor tem o site funcionando com só clonar o repositório e configurar o .env.**
