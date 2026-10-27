@@ -9,6 +9,20 @@
 
 ### 🎯 Objetivo: Deixar o site no ar **pra sempre** no navegador (URL fixa)
 
+### 📥 PASSO 0: Clonar o Repositório do GitHub
+**Basta copiar e colar este comando no terminal (Mobaxterm, PowerShell, Git Bash):**
+
+```bash
+git clone https://github.com/marravictor/BeastCore.git
+```
+
+Depois entre na pasta:
+```bash
+cd BeastCore
+```
+
+*(Isso já deixa o código todo no seu servidor/PC)*
+
 ---
 
 ### PASSO 1: Criar conta no Moba (grátis)
