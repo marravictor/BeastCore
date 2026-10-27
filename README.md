@@ -31,6 +31,23 @@ git clone https://github.com/marravictor/BeastCore.git
 
 ---
 
+## 🛠️ Tecnologias Utilizadas
+
+Esta projeto foi construído com:
+
+| Tecnologia | Função |
+|------------|--------|
+| **PHP 8.1+** | linguagem de backend, processamento de lógica e banco de dados |
+| **PostgreSQL** | banco de dados relacional para produção (Moba, Heroku, Render, VPS) |
+| **SQLite** | banco de dados local em arquivo para desenvolvimento/testes |
+| **PDO** | extensão PHP para conexão com múltiplos bancos de dados |
+| **HTML5 + CSS3** | estrutura e estilização das páginas |
+| **Git + GitHub** | versionamento e deploy automático |
+| **Apache / Nginx** | servidores web para hospedagem |
+| **Bootstrap / CSS Custom** | layout responsivo e design visual |
+
+---
+
 ## 🛠️ Comandos úteis afterward
 
 ```bash
